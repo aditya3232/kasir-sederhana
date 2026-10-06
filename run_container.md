@@ -41,6 +41,17 @@ masuk dalam app laravel dan menjalankan artisan migrate
 ```bash
 docker compose -f docker-compose.dev.yml exec app php artisan migrate
 ```
+memasang breeze : starter kit laravel untuk auth (login, logout, lupa kata sandi, profile)
+- halaman register dan login : tempat pengguna mendaftar dan masuk
+- logika auth : mengurus proses masuk, keluar, dan keamanan sesi
+- halaman profil : tempat pengguna mengubah data dan kata sandinya
+- penjaga halaman : pelindung agar halaman tertentu hanya bisa diakses setelah login
+
+untuk masalah saat install breeze blade, jalankan npm install di dalam folder src langsung
+```bash
+docker compose -f docker-compose.dev.yml exec app composer require laravel/breeze --dev
+docker compose -f docker-compose.dev.yml exec app php artisan breeze:install blade
+```
 
 ## 5. Restart app
 untukr restart satu service 
