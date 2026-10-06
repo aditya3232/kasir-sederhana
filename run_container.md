@@ -33,6 +33,14 @@ untuk menjalankan perintah seperti artisan jalankan perintah dari dalam containe
 ```bash
 docker compose -f docker-compose.dev.yml exec app bash
 ```
+masuk ke dalam app laravel dan menjalankan composer. Jalankan di  projek ./kasir-sederhana tempat ditemukan docker-compose.dev.yml
+```bash
+docker compose -f docker-compose.dev.yml exec app composer create-project laravel/laravel .
+```
+masuk dalam app laravel dan menjalankan artisan migrate
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan migrate
+```
 
 ## 5. Restart app
 untukr restart satu service 
