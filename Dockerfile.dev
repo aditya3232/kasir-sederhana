@@ -1,0 +1,40 @@
+# image yang berisi environment php 8.4
+FROM php:8.4-fpm 
+
+# fodler utama dalam container, semua perintah akan dijalankan dari folder ini, kode laravel disini 
+WORKDIR /var/www/html
+
+# komponen & library untuk php agar bisa jalan
+RUN apt-get update && apt-get install -y \
+    git curl libpng-dev libonig-dev libxml2-dev \
+    zip unzip libzip-dev libfreetype6-dev \
+    libjpeg62-turbo-dev libgd-dev vim
+
+# membersihkan sisa-sisa pemasangan agar image tidak gemuk
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# menambahkan ekstensi php
+# pdo_mysql : agar php bisa berbicara dengan database mysql
+# mbstring : mengolah teks dengan benar, termasuk huruf non-latin
+# gd : mengolah dan mengubah ukuran gambar
+# bcmath : menghitung angka besar dengan presisi tinggi
+# zip : membuat dan membuka berkas zip
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+
+# menyalin composer ke dalam image laravel
+# dengan begitu nanti bisa menjalankan perintah composer langsung dari dalam container 
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# membuat user bernama www, dan beralih memakai user www
+# untuk keperluan menjalankan aplikasi sebagai user non root
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+USER www
+
+# expose port aplikasi laravel di port 9000, pintu php berbicara dengan nginx (satu network)
+# CMD : menentukan apa yang dijalankan saat container hidup
+# php-fpm : program yang menjalankan aplikasi php
+# nginx : adalah layanan yang menyediakan aplikasi php agar bisa diakses (web server)
+EXPOSE 9000
+CMD ["php-fpm"]
