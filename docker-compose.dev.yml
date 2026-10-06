@@ -1,0 +1,50 @@
+services:
+  app: # tidak perlu port, yang komunikasi nanti nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.dev # beri tahu untuk membangun container dari Dockerfile.dev
+    container_name: kasir-app-dev
+    # restart: unless-stopped # membuat container nyala lagi kalau sempat mati
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+      - ./php.ini:/usr/local/etc/php/conf.d/local.ini # menyambungkan config php di projek ini ke dalam container
+    networks:
+      - kasir-network
+    depends_on: # mengatur urutan container yang nyala
+      - database
+
+  nginx:
+    image: nginx:alpine
+    container_name: kasir-nginx-dev
+    # restart: unless-stopped
+    ports:
+      - "8000:80" # port 80 nginx akan di mapping ke 8000 di host
+    volumes:
+      - ./src:/var/www/html # menyambungkan folder src di projek ini, ke /var/www/html di dalam container (bind mount)
+      - ./nginx.dev.conf:/etc/nginx/conf.d/default.conf # menyambungkan config nginx di projek ini ke dalam container
+    networks:
+      - kasir-network
+    depends_on:
+      - app
+
+  database:
+    image: mysql:8.0
+    container_name: kasir-database
+    # restart: unless-stopped
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env.docker
+    networks:
+      - kasir-network
+    volumes:
+      - dbdata:/var/lib/mysql # dbdata, adalah nama volume yg dikelola oleh docker sendiri (named volume)
+
+networks:
+  kasir-network:
+    driver: bridge # network default docker, untuk internal container bisa saling akses menggunakan nama service nya, jika di network yg sama
+
+volumes:
+  dbdata:
+    driver: local
