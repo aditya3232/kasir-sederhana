@@ -53,6 +53,52 @@ docker compose -f docker-compose.dev.yml exec app composer require laravel/breez
 docker compose -f docker-compose.dev.yml exec app php artisan breeze:install blade
 ```
 
+untuk membuat controller dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:controller ProdukController
+```
+
+untuk membuat resource controller dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:controller ProdukController --resource
+```
+
+untuk membuat component dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:component Alert
+```
+
+untuk membuat migration dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:migration create_produk_table
+```
+
+untuk menjalankan migration dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan migrate
+```
+
+untuk membuat model dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:model Produk
+```
+
+untuk membuat seeder dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:seeder ProdukSeeder
+```
+
+untuk menjalankan seeder dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan db:seed --class=ProdukSeeder
+```
+
+untuk membuat form request dengan artisan
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan make:request StoreProdukRequest
+docker compose -f docker-compose.dev.yml exec app php artisan make:request UpdateProdukRequest
+```
+
 ## 5. Restart app
 untukr restart satu service 
 ```bash
