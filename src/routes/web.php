@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,4 +22,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::prefix('produk')->name('produk.')->group(function () {
+    Route::get('/', [ProdukController::class, 'index'])->name('index');
+    Route::get('/tambah', [ProdukController::class, 'create'])->name('create');
+    Route::post('/', [ProdukController::class, 'store'])->name('store');
+    Route::get('/{id}', [ProdukController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ProdukController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [ProdukController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ProdukController::class, 'destroy'])->name('destroy');
+});
+
+
+require __DIR__ . '/auth.php';
