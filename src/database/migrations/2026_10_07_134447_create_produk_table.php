@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->text('deskripsi')->nullable();
             $table->integer('harga');
+            $table->integer('stok')->default(0);
+            $table->boolean('aktif')->default(true);
+            $table->string('kode')->unique();
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

@@ -78,6 +78,12 @@ untuk menjalankan migration dengan artisan
 docker compose -f docker-compose.dev.yml exec app php artisan migrate
 ```
 
+untuk rollback atau refresh (mengulang migration dari nol)
+```bash
+docker compose -f docker-compose.dev.yml exec app php artisan migrate:rollback
+docker compose -f docker-compose.dev.yml exec app php artisan migrate:fresh
+```
+
 untuk membuat model dengan artisan
 ```bash
 docker compose -f docker-compose.dev.yml exec app php artisan make:model Produk
