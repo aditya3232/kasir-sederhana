@@ -36,7 +36,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255|unique:product,code', // kode tidak boleh sama dengan kode milik produk manapun di tabel
+            'code' => 'required|string|max:255|unique:products,code', // kode tidak boleh sama dengan kode milik produk manapun di tabel
             'price' => 'required|integer|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
@@ -55,6 +55,7 @@ class StoreProductRequest extends FormRequest
             'price.required' => 'Harga produk wajib diisi.',
             'price.integer' => 'Harga harus berupa angka bulat.',
             'stock.integer' => 'Stok harus berupa angka bulat.',
+            'category_id.required' => 'Kategori wajib diisi.'
         ];
     }
 

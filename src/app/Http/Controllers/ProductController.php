@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Http\Requests\StoreProdukRequest;
+use App\Models\Category;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProdukRequest;
 
 class ProductController extends Controller
@@ -52,18 +53,20 @@ class ProductController extends Controller
     //         ->with('success', 'Produk berhasil diperbarui.'); // dengan flash message
     // }
 
-    // public function create()
-    // {
-    //     return view('produk.create');
-    // }
+    public function create()
+    {
+        $categories = Category::all();
 
-    // public function store(StoreProdukRequest $request)
-    // {
-    //     Produk::create($request->validated());
+        return view('product.create', compact('categories'));
+    }
 
-    //     return redirect()->route('produk.index')
-    //         ->with('success', 'Produk berhasil disimpan.');
-    // }
+    public function store(StoreProductRequest $request)
+    {
+        Product::create($request->validated());
+
+        return redirect()->route('product.index')
+            ->with('success', 'Produk berhasil disimpan.');
+    }
 
     // public function destroy($produk_id)
     // {

@@ -36,7 +36,7 @@ class UpdateProductRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('product', 'code')->ignore($this->route('product_id')),
+                Rule::unique('products', 'code')->ignore($this->route('product_id')),
             ], // memberi tahu laravel: saat mengecek unik, abaikan baris milik produk yang sedang diedit
             'price' => 'required|integer|min:0',
             'stock' => 'required|integer|min:0',
