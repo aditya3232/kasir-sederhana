@@ -117,6 +117,10 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-2">
+                                        <a href="{{ route('produk.show', $item) }}"
+                                        class="rounded-md px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition">
+                                            Detail
+                                        </a>
                                         <a href="{{ route('produk.edit', $item) }}"
                                            class="rounded-md px-2.5 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50 transition">
                                             Edit
