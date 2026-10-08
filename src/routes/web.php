@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CashierController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,14 @@ Route::prefix('category')->name('category.')->group(function () {
     Route::get('/{category_id}/edit', [CategoryController::class, 'edit'])->name('edit');
     Route::put('/{category_id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/{category_id}', [CategoryController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('cashier')->name('cashier.')->group(function () {
+    Route::get('/', [CashierController::class, 'index'])->name('index');
+    Route::post('/add/{id}', [CashierController::class, 'add'])->name('add');          // cashier.add
+    Route::patch('/update/{id}', [CashierController::class, 'update'])->name('update');
+    Route::delete('/remove/{id}', [CashierController::class, 'remove'])->name('remove');
+    Route::delete('/clear', [CashierController::class, 'clear'])->name('clear');
 });
 
 
