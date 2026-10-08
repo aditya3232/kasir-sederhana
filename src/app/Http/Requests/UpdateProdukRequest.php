@@ -13,7 +13,7 @@ class UpdateProdukRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     protected function prepareForValidation(): void
@@ -36,13 +36,26 @@ class UpdateProdukRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('produk', 'kode')->ignore($this->route('produk')),
+                Rule::unique('produk', 'kode')->ignore($this->route('produk_id')),
             ], // memberi tahu laravel: saat mengecek unik, abaikan baris milik produk yang sedang diedit
             'harga' => 'required|integer|min:0',
             'stok' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
             'catatan' => 'nullable|string',
             'aktif' => 'boolean',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nama.required' => 'Nama produk wajib diisi.',
+            'kode.required' => 'Kode produk wajib diisi.',
+            'kode.unique' => 'Kode produk sudah digunakan.',
+            'harga.required' => 'Harga produk wajib diisi.',
+            'harga.integer' => 'Harga harus berupa angka bulat.',
+            'stok.required' => 'Stok wajib diisi.',
+            'stok.integer' => 'Stok harus berupa angka bulat.',
         ];
     }
 }

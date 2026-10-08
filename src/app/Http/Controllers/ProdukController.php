@@ -27,28 +27,28 @@ class ProdukController extends Controller
         return view('produk.index', compact('produk'));
     }
 
-    public function show($id)
+    public function show($produk_id)
     {
-        $produk = Produk::findOrFail($id);
+        $produk = Produk::findOrFail($produk_id);
 
         return view('produk.show', compact('produk'));
     }
 
-    public function edit($id)
+    public function edit($produk_id)
     {
-        $produk = Produk::findOrFail($id);
+        $produk = Produk::findOrFail($produk_id);
 
         return view('produk.edit', compact('produk'));
     }
 
-    public function update(UpdateProdukRequest $request, $id)
+    public function update(UpdateProdukRequest $request, $produk_id)
     {
-        $produk = Produk::findOrFail($id);
+        $produk = Produk::findOrFail($produk_id);
 
         $produk->update($request->validated());
 
         return redirect()->route('produk.index')
-            ->with('success', 'Produk berhasil diperbarui.');
+            ->with('success', 'Produk berhasil diperbarui.'); // dengan flash message
     }
 
     public function create()
@@ -64,9 +64,10 @@ class ProdukController extends Controller
             ->with('success', 'Produk berhasil disimpan.');
     }
 
-    public function destroy($id)
+    public function destroy($produk_id)
     {
-        Produk::destroy($id);
+        $produk = Produk::findOrFail($produk_id);
+        $produk->delete();
 
         return redirect()->route('produk.index')
             ->with('success', 'Produk berhasil dihapus.');

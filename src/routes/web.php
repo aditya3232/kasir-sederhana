@@ -26,10 +26,10 @@ Route::prefix('produk')->name('produk.')->group(function () {
     Route::get('/', [ProdukController::class, 'index'])->name('index');
     Route::get('/tambah', [ProdukController::class, 'create'])->name('create');
     Route::post('/', [ProdukController::class, 'store'])->name('store');
-    Route::get('/{id}', [ProdukController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [ProdukController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [ProdukController::class, 'update'])->name('update');
-    Route::delete('/{id}', [ProdukController::class, 'destroy'])->name('destroy');
+    Route::get('/{produk_id}', [ProdukController::class, 'show'])->name('show');
+    Route::get('/{produk_id}/edit', [ProdukController::class, 'edit'])->name('edit');
+    Route::put('/{produk_id}', [ProdukController::class, 'update'])->name('update');
+    Route::delete('/{produk_id}', [ProdukController::class, 'destroy'])->name('destroy');
 });
 
 
