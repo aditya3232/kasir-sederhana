@@ -26,4 +26,11 @@ class StoreCategoryRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'unique:categories,name'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Nama kategori wajib diisi.',
+        ];
+    }
 }

@@ -79,17 +79,10 @@
                                     {{ $category->firstItem() + $loop->index }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span
-                                        class="inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
-                                        {{ $item->name }}
-                                    </span>
+                                    <p class="font-medium text-gray-800">{{ $item->name }}</p>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('category.show', $item) }}"
-                                            class="rounded-md px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition">
-                                            Detail
-                                        </a>
                                         <a href="{{ route('category.edit', $item) }}"
                                             class="rounded-md px-2.5 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50 transition">
                                             Edit
