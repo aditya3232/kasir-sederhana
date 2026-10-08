@@ -141,13 +141,39 @@
                         <span class="text-sm text-gray-600">Total belanja</span>
                         <span class="text-xl font-bold text-gray-900">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
-                    {{-- Tombol bayar akan diaktifkan di lesson berikutnya --}}
-                    <button disabled
-                        class="mt-3 w-full cursor-not-allowed rounded-lg bg-gray-300 px-4 py-2.5 text-sm font-medium text-white">
-                        Bayar (lesson berikutnya)
-                    </button>
+                    <form method="POST" action="{{ route('cashier.store') }}" class="mt-4 space-y-3">
+                        @csrf
+                        <div>
+                            <label for="paid_amount" class="mb-1 block text-xs font-medium text-gray-600">Uang dibayarkan
+                                (Rp)</label>
+                            <input type="number" id="paid_amount" name="paid_amount" min="{{ $total }}"
+                                step="1" value="{{ old('paid_amount') }}" required
+                                oninput="updateChange({{ $total }})"
+                                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">Kembalian</span>
+                            <span id="change" class="font-semibold text-gray-900">Rp 0</span>
+                        </div>
+
+                        <button type="submit" @disabled(!count($cart))
+                            class="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300">
+                            Bayar
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function updateChange(total) {
+            const paid = parseInt(document.getElementById('paid_amount').value) || 0;
+            const change = Math.max(0, paid - total);
+            document.getElementById('change').textContent = 'Rp ' + change.toLocaleString('id-ID');
+        }
+    </script>
+@endpush

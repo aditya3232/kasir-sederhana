@@ -48,6 +48,7 @@ Route::prefix('cashier')->name('cashier.')->group(function () {
     Route::post('/add/{id}', [CashierController::class, 'add'])->name('add');          // cashier.add
     Route::patch('/update/{id}', [CashierController::class, 'update'])->name('update');
     Route::delete('/remove/{id}', [CashierController::class, 'remove'])->name('remove');
+    Route::post('/checkout', [CashierController::class, 'store'])->name('store');      // cashier.store
     Route::delete('/clear', [CashierController::class, 'clear'])->name('clear');
 });
 
