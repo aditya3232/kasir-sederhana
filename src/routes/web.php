@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,12 +25,22 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('product')->name('product.')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
-    Route::get('/tambah', [ProductController::class, 'create'])->name('create');
+    Route::get('/add', [ProductController::class, 'create'])->name('create');
     Route::post('/', [ProductController::class, 'store'])->name('store');
     Route::get('/{product_id}', [ProductController::class, 'show'])->name('show');
     Route::get('/{product_id}/edit', [ProductController::class, 'edit'])->name('edit');
     Route::put('/{product_id}', [ProductController::class, 'update'])->name('update');
     Route::delete('/{product_id}', [ProductController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('category')->name('category.')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('index');
+    Route::get('/add', [CategoryController::class, 'create'])->name('create');
+    Route::post('/', [CategoryController::class, 'store'])->name('store');
+    Route::get('/{category_id}', [CategoryController::class, 'show'])->name('show');
+    Route::get('/{category_id}/edit', [CategoryController::class, 'edit'])->name('edit');
+    Route::put('/{category_id}', [CategoryController::class, 'update'])->name('update');
+    Route::delete('/{category_id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 
 
