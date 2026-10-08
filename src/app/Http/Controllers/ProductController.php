@@ -29,12 +29,12 @@ class ProductController extends Controller
         return view('product.index', compact('product'));
     }
 
-    // public function show($produk_id)
-    // {
-    //     $produk = Produk::findOrFail($produk_id);
+    public function show($product_id)
+    {
+        $product = Product::with('category')->findOrFail($product_id);
 
-    //     return view('produk.show', compact('produk'));
-    // }
+        return view('product.show', compact('product'));
+    }
 
     // public function edit($produk_id)
     // {

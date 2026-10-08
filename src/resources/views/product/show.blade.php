@@ -5,15 +5,15 @@
 
         {{-- Header --}}
         <div class="mb-6">
-            <a href="{{ route('produk.index') }}" class="text-sm text-gray-500 hover:text-gray-700 transition">
+            <a href="{{ route('product.index') }}" class="text-sm text-gray-500 hover:text-gray-700 transition">
                 &larr; Kembali ke daftar produk
             </a>
 
             <div class="mt-2 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div>
                     <div class="flex flex-wrap items-center gap-3">
-                        <h1 class="text-2xl font-bold text-gray-800">{{ $produk->nama }}</h1>
-                        @if ($produk->aktif)
+                        <h1 class="text-2xl font-bold text-gray-800">{{ $product->name }}</h1>
+                        @if ($product->is_active)
                             <span
                                 class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
                                 <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span> Aktif
@@ -25,19 +25,28 @@
                             </span>
                         @endif
                     </div>
-                    <span class="mt-2 inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
-                        {{ $produk->kode }}
-                    </span>
+
+                    <div class="mt-2 flex flex-wrap items-center gap-2">
+                        <span class="inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
+                            {{ $product->code }}
+                        </span>
+                        @if ($product->category)
+                            <span
+                                class="inline-flex rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700">
+                                {{ $product->category->name }}
+                            </span>
+                        @endif
+                    </div>
                 </div>
 
                 {{-- Aksi --}}
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('produk.edit', $produk) }}"
+                    <a href="{{ route('product.edit', $product) }}"
                         class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
                         Edit
                     </a>
-                    <form action="{{ route('produk.destroy', $produk) }}" method="POST"
-                        onsubmit="return confirm('Yakin ingin menghapus produk {{ $produk->nama }}?')">
+                    <form action="{{ route('product.destroy', $product) }}" method="POST"
+                        onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
@@ -65,18 +74,18 @@
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Harga</p>
                 <p class="mt-2 text-2xl font-bold text-gray-800">
-                    Rp {{ number_format($produk->harga, 0, ',', '.') }}
+                    Rp {{ number_format($product->price, 0, ',', '.') }}
                 </p>
             </div>
 
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5">
                 <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Stok</p>
                 <div class="mt-2 flex items-center gap-3">
-                    <p class="text-2xl font-bold text-gray-800">{{ $produk->stok }}</p>
-                    @if ($produk->stok <= 0)
+                    <p class="text-2xl font-bold text-gray-800">{{ $product->stock }}</p>
+                    @if ($product->stock <= 0)
                         <span
                             class="inline-flex rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">Habis</span>
-                    @elseif ($produk->stok <= 10)
+                    @elseif ($product->stock <= 10)
                         <span
                             class="inline-flex rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-700">Stok
                             menipis</span>
@@ -97,39 +106,42 @@
             <dl class="divide-y divide-gray-100 text-sm">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
                     <dt class="font-medium text-gray-500">Nama Produk</dt>
-                    <dd class="sm:col-span-2 text-gray-800">{{ $produk->nama }}</dd>
+                    <dd class="sm:col-span-2 text-gray-800">{{ $product->name }}</dd>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
                     <dt class="font-medium text-gray-500">Kode Produk</dt>
-                    <dd class="sm:col-span-2 text-gray-800 font-mono">{{ $produk->kode }}</dd>
+                    <dd class="sm:col-span-2 text-gray-800 font-mono">{{ $product->code }}</dd>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
+                    <dt class="font-medium text-gray-500">Kategori</dt>
+                    <dd class="sm:col-span-2 text-gray-800">
+                        {{ $product->category->name ?? '-' }}
+                    </dd>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
                     <dt class="font-medium text-gray-500">Deskripsi</dt>
-                    <dd class="sm:col-span-2 text-gray-800 whitespace-pre-line">
-                        {{ $produk->deskripsi ?: '-' }}
-                    </dd>
+                    <dd class="sm:col-span-2 text-gray-800 whitespace-pre-line">{{ $product->description ?: '-' }}</dd>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
                     <dt class="font-medium text-gray-500">Catatan Internal</dt>
-                    <dd class="sm:col-span-2 text-gray-800 whitespace-pre-line">
-                        {{ $produk->catatan ?: '-' }}
-                    </dd>
+                    <dd class="sm:col-span-2 text-gray-800 whitespace-pre-line">{{ $product->note ?: '-' }}</dd>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
                     <dt class="font-medium text-gray-500">Dibuat</dt>
                     <dd class="sm:col-span-2 text-gray-800">
-                        {{ $produk->created_at?->translatedFormat('d F Y, H:i') ?? '-' }}
+                        {{ $product->created_at?->translatedFormat('d F Y, H:i') ?? '-' }}
                     </dd>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 px-6 py-4">
                     <dt class="font-medium text-gray-500">Terakhir Diperbarui</dt>
                     <dd class="sm:col-span-2 text-gray-800">
-                        {{ $produk->updated_at?->translatedFormat('d F Y, H:i') ?? '-' }}
+                        {{ $product->updated_at?->translatedFormat('d F Y, H:i') ?? '-' }}
                     </dd>
                 </div>
             </dl>
