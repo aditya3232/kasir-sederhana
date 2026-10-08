@@ -127,7 +127,7 @@
 
                 @if ($category->hasPages())
                     <div>
-                        {{ $category->links() }}
+                        {{ $category->onEachSide(1)->links('components.pagination') }}
                     </div>
                 @endif
             </div>

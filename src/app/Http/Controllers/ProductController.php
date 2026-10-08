@@ -14,6 +14,7 @@ class ProductController extends Controller
         $search = $request->query('search');
 
         $product = Product::query()
+            ->with('category') // eager load relasi category, mencegah N+1 query
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")

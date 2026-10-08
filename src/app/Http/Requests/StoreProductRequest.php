@@ -42,6 +42,7 @@ class StoreProductRequest extends FormRequest
             'description' => 'nullable|string',
             'note' => 'nullable|string',
             'is_active' => 'boolean',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 

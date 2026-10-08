@@ -71,6 +71,7 @@
                             <th class="px-4 py-3 text-left font-semibold w-12">No</th>
                             <th class="px-4 py-3 text-left font-semibold">Kode</th>
                             <th class="px-4 py-3 text-left font-semibold">Nama Produk</th>
+                            <th class="px-4 py-3 text-left font-semibold">Kategori</th>
                             <th class="px-4 py-3 text-right font-semibold">Harga</th>
                             <th class="px-4 py-3 text-center font-semibold">Stok</th>
                             <th class="px-4 py-3 text-center font-semibold">Status</th>
@@ -85,7 +86,7 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <span
-                                        class="inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
+                                        class="-ml-2 inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
                                         {{ $item->code }}
                                     </span>
                                 </td>
@@ -93,6 +94,16 @@
                                     <p class="font-medium text-gray-800">{{ $item->name }}</p>
                                     @if ($item->description)
                                         <p class="text-xs text-gray-400">{{ Str::limit($item->description, 50) }}</p>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3">
+                                    @if ($item->category)
+                                        <span
+                                            class="-ml-2.5 inline-flex rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700 whitespace-nowrap">
+                                            {{ $item->category->name }}
+                                        </span>
+                                    @else
+                                        <span class="text-gray-400">-</span>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-right font-medium text-gray-800 whitespace-nowrap">
@@ -124,7 +135,7 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-3">
-                                    <div class="flex items-center justify-end gap-2">
+                                    <div class="flex items-center justify-end gap-1 -mr-2.5">
                                         <a href="{{ route('product.show', $item) }}"
                                             class="rounded-md px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition">
                                             Detail
@@ -147,7 +158,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-4 py-12 text-center">
+                                <td colspan="8" class="px-4 py-12 text-center">
                                     <p class="text-gray-500">
                                         @if (request('search'))
                                             Tidak ada produk yang cocok dengan "<span
@@ -173,7 +184,7 @@
 
                 @if ($product->hasPages())
                     <div>
-                        {{ $product->links() }}
+                        {{ $product->onEachSide(1)->links('components.pagination') }}
                     </div>
                 @endif
             </div>
