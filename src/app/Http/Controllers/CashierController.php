@@ -220,14 +220,10 @@ class CashierController extends Controller
         // Keranjang sudah selesai tugasnya
         session()->forget(self::CART_KEY);
 
+        // Arahkan langsung ke struk transaksi yang baru disimpan
         return redirect()
-            ->route('cashier.index')
-            ->with('success', sprintf(
-                'Transaksi %s berhasil. Total Rp %s, kembalian Rp %s.',
-                $transaction->invoice_number,
-                number_format($transaction->total_amount, 0, ',', '.'),
-                number_format($transaction->change_amount, 0, ',', '.')
-            ));
+            ->route('transactions.show', $transaction->id)
+            ->with('success', 'Transaksi berhasil disimpan.');
     }
 
     private function generateInvoiceNumber(): string

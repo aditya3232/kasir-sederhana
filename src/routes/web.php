@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -52,5 +53,9 @@ Route::prefix('cashier')->name('cashier.')->group(function () {
     Route::delete('/clear', [CashierController::class, 'clear'])->name('clear');
 });
 
+Route::prefix('transactions')->name('transactions.')->group(function () {
+    Route::get('/', [TransactionController::class, 'index'])->name('index');
+    Route::get('/{id}', [TransactionController::class, 'show'])->name('show');
+});
 
 require __DIR__ . '/auth.php';
