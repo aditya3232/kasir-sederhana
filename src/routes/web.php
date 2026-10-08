@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,14 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('produk')->name('produk.')->group(function () {
-    Route::get('/', [ProdukController::class, 'index'])->name('index');
-    Route::get('/tambah', [ProdukController::class, 'create'])->name('create');
-    Route::post('/', [ProdukController::class, 'store'])->name('store');
-    Route::get('/{produk_id}', [ProdukController::class, 'show'])->name('show');
-    Route::get('/{produk_id}/edit', [ProdukController::class, 'edit'])->name('edit');
-    Route::put('/{produk_id}', [ProdukController::class, 'update'])->name('update');
-    Route::delete('/{produk_id}', [ProdukController::class, 'destroy'])->name('destroy');
+Route::prefix('product')->name('product.')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('index');
+    Route::get('/tambah', [ProductController::class, 'create'])->name('create');
+    Route::post('/', [ProductController::class, 'store'])->name('store');
+    Route::get('/{product_id}', [ProductController::class, 'show'])->name('show');
+    Route::get('/{product_id}/edit', [ProductController::class, 'edit'])->name('edit');
+    Route::put('/{product_id}', [ProductController::class, 'update'])->name('update');
+    Route::delete('/{product_id}', [ProductController::class, 'destroy'])->name('destroy');
 });
 
 

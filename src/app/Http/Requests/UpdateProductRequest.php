@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateProdukRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class UpdateProdukRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'aktif' => $this->boolean('aktif'),
+            'is_active' => $this->boolean('is_active'),
         ]);
     }
 
@@ -31,31 +31,31 @@ class UpdateProdukRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'required|string|max:255',
-            'kode' => [
+            'name' => 'required|string|max:255',
+            'code' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('produk', 'kode')->ignore($this->route('produk_id')),
+                Rule::unique('product', 'code')->ignore($this->route('product_id')),
             ], // memberi tahu laravel: saat mengecek unik, abaikan baris milik produk yang sedang diedit
-            'harga' => 'required|integer|min:0',
-            'stok' => 'required|integer|min:0',
-            'deskripsi' => 'nullable|string',
-            'catatan' => 'nullable|string',
-            'aktif' => 'boolean',
+            'price' => 'required|integer|min:0',
+            'stock' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'note' => 'nullable|string',
+            'is_active' => 'boolean',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'nama.required' => 'Nama produk wajib diisi.',
-            'kode.required' => 'Kode produk wajib diisi.',
-            'kode.unique' => 'Kode produk sudah digunakan.',
-            'harga.required' => 'Harga produk wajib diisi.',
-            'harga.integer' => 'Harga harus berupa angka bulat.',
-            'stok.required' => 'Stok wajib diisi.',
-            'stok.integer' => 'Stok harus berupa angka bulat.',
+            'name.required' => 'Nama produk wajib diisi.',
+            'code.required' => 'Kode produk wajib diisi.',
+            'code.unique' => 'Kode produk sudah digunakan.',
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.integer' => 'Harga harus berupa angka bulat.',
+            'stock.required' => 'Stok wajib diisi.',
+            'stock.integer' => 'Stok harus berupa angka bulat.',
         ];
     }
 }
