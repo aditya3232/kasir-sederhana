@@ -9,9 +9,20 @@ use App\Http\Requests\UpdateProdukRequest;
 
 class ProdukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $produk = Produk::all();
+        $search = $request->query('search');
+
+        $produk = Produk::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%")
+                        ->orWhere('kode', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString(); // supaya keyword search tidak hilang saat pindah halaman
 
         return view('produk.index', compact('produk'));
     }

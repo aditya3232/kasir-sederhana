@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProdukRequest extends FormRequest
 {
@@ -15,6 +16,13 @@ class UpdateProdukRequest extends FormRequest
         return false;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'aktif' => $this->boolean('aktif'),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +31,18 @@ class UpdateProdukRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama' => 'required|string|max:255',
+            'kode' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('produk', 'kode')->ignore($this->route('produk')),
+            ], // memberi tahu laravel: saat mengecek unik, abaikan baris milik produk yang sedang diedit
+            'harga' => 'required|integer|min:0',
+            'stok' => 'required|integer|min:0',
+            'deskripsi' => 'nullable|string',
+            'catatan' => 'nullable|string',
+            'aktif' => 'boolean',
         ];
     }
 }

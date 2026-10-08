@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     protected $table = 'produk';
-    protected $fillable = ['nama', 'harga', 'stok']; // nama kolom yg boleh diisi lewat mass assignment
+
+    // nama kolom yg boleh diisi lewat mass assignment
+    protected $fillable = [
+        'nama',
+        'kode',
+        'harga',
+        'stok',
+        'deskripsi',
+        'catatan',
+        'aktif',
+    ];
 }
