@@ -10,7 +10,7 @@
                 <p class="text-sm text-gray-500">Kelola semua produk yang tersedia.</p>
             </div>
             <a href="{{ route('produk.create') }}"
-               class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
@@ -20,7 +20,8 @@
 
         {{-- Flash message --}}
         @if (session('success'))
-            <div class="mb-4 flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            <div
+                class="mb-4 flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
@@ -37,20 +38,21 @@
                     <div class="relative flex-1">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </span>
                         <input type="text" name="search" value="{{ request('search') }}"
-                               placeholder="Cari nama atau kode..."
-                               class="w-full rounded-lg border border-gray-300 pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            placeholder="Cari nama atau kode..."
+                            class="w-full rounded-lg border border-gray-300 pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
                     <button type="submit"
-                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                         Cari
                     </button>
                     @if (request('search'))
                         <a href="{{ route('produk.index') }}"
-                           class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition self-center">
+                            class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition self-center">
                             Reset
                         </a>
                     @endif
@@ -82,14 +84,15 @@
                                     {{ $produk->firstItem() + $loop->index }}
                                 </td>
                                 <td class="px-4 py-3">
-                                    <span class="inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
+                                    <span
+                                        class="inline-block rounded bg-gray-100 px-2 py-0.5 font-mono text-xs text-gray-700">
                                         {{ $item->kode }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-3">
                                     <p class="font-medium text-gray-800">{{ $item->nama }}</p>
                                     @if ($item->deskripsi)
-                                        <p class="text-xs text-gray-400">{{ \Illuminate\Support\Str::limit($item->deskripsi, 50) }}</p>
+                                        <p class="text-xs text-gray-400">{{ Str::limit($item->deskripsi, 50) }}</p>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-right font-medium text-gray-800 whitespace-nowrap">
@@ -97,20 +100,25 @@
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @if ($item->stok <= 0)
-                                        <span class="inline-flex rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">Habis</span>
+                                        <span
+                                            class="inline-flex rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">Habis</span>
                                     @elseif ($item->stok <= 10)
-                                        <span class="inline-flex rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-700">{{ $item->stok }}</span>
+                                        <span
+                                            class="inline-flex rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-700">{{ $item->stok }}</span>
                                     @else
-                                        <span class="inline-flex rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">{{ $item->stok }}</span>
+                                        <span
+                                            class="inline-flex rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">{{ $item->stok }}</span>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @if ($item->aktif)
-                                        <span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                                        <span
+                                            class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
                                             <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span> Aktif
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">
+                                        <span
+                                            class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">
                                             <span class="h-1.5 w-1.5 rounded-full bg-gray-400"></span> Nonaktif
                                         </span>
                                     @endif
@@ -118,19 +126,19 @@
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-2">
                                         <a href="{{ route('produk.show', $item) }}"
-                                        class="rounded-md px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition">
+                                            class="rounded-md px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100 transition">
                                             Detail
                                         </a>
                                         <a href="{{ route('produk.edit', $item) }}"
-                                           class="rounded-md px-2.5 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50 transition">
+                                            class="rounded-md px-2.5 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50 transition">
                                             Edit
                                         </a>
                                         <form action="{{ route('produk.destroy', $item) }}" method="POST"
-                                              onsubmit="return confirm('Yakin ingin menghapus produk {{ $item->nama }}?')">
+                                            onsubmit="return confirm('Yakin ingin menghapus produk {{ $item->nama }}?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                    class="rounded-md px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 transition">
+                                                class="rounded-md px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 transition">
                                                 Hapus
                                             </button>
                                         </form>
@@ -142,7 +150,8 @@
                                 <td colspan="7" class="px-4 py-12 text-center">
                                     <p class="text-gray-500">
                                         @if (request('search'))
-                                            Tidak ada produk yang cocok dengan "<span class="font-medium">{{ request('search') }}</span>".
+                                            Tidak ada produk yang cocok dengan "<span
+                                                class="font-medium">{{ request('search') }}</span>".
                                         @else
                                             Belum ada produk. Silakan tambah produk pertama Anda.
                                         @endif
@@ -155,7 +164,8 @@
             </div>
 
             {{-- Pagination --}}
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-3 border-t border-gray-100 bg-gray-50">
+            <div
+                class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-3 border-t border-gray-100 bg-gray-50">
                 <p class="text-sm text-gray-500">
                     Menampilkan {{ $produk->firstItem() ?? 0 }} - {{ $produk->lastItem() ?? 0 }}
                     dari {{ $produk->total() }} produk
