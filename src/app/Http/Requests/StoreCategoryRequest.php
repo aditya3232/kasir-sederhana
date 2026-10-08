@@ -31,6 +31,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'Nama kategori wajib diisi.',
+            'name.unique' => 'Nama kategori sudah digunakan.',
         ];
     }
 }
