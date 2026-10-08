@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProdukRequest;
+use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -36,22 +36,23 @@ class ProductController extends Controller
         return view('product.show', compact('product'));
     }
 
-    // public function edit($produk_id)
-    // {
-    //     $produk = Produk::findOrFail($produk_id);
+    public function edit($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        $categories = Category::all();
 
-    //     return view('produk.edit', compact('produk'));
-    // }
+        return view('product.edit', compact('product', 'categories'));
+    }
 
-    // public function update(UpdateProdukRequest $request, $produk_id)
-    // {
-    //     $produk = Produk::findOrFail($produk_id);
+    public function update(UpdateProductRequest $request, $product_id)
+    {
+        $product = Product::findOrFail($product_id);
 
-    //     $produk->update($request->validated());
+        $product->update($request->validated());
 
-    //     return redirect()->route('produk.index')
-    //         ->with('success', 'Produk berhasil diperbarui.'); // dengan flash message
-    // }
+        return redirect()->route('product.index')
+            ->with('success', 'Produk berhasil diperbarui.'); // dengan flash message
+    }
 
     public function create()
     {

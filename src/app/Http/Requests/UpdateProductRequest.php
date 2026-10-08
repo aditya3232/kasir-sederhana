@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Category;
+use App\Models\Product;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -36,14 +38,14 @@ class UpdateProductRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('products', 'code')->ignore($this->route('product_id')),
+                Rule::unique(Product::class, 'code')->ignore($this->route('product_id')),
             ], // memberi tahu laravel: saat mengecek unik, abaikan baris milik produk yang sedang diedit
             'price' => 'required|integer|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'note' => 'nullable|string',
             'is_active' => 'boolean',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => ['required', Rule::exists(Category::class, 'id')],
         ];
     }
 
@@ -51,12 +53,16 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name.required' => 'Nama produk wajib diisi.',
+            'name.max' => 'Nama produk maksimal 255 karakter.',
             'code.required' => 'Kode produk wajib diisi.',
             'code.unique' => 'Kode produk sudah digunakan.',
+            'category_id.required' => 'Kategori wajib dipilih.',
+            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
             'price.required' => 'Harga produk wajib diisi.',
             'price.integer' => 'Harga harus berupa angka bulat.',
-            'stock.required' => 'Stok wajib diisi.',
+            'price.min' => 'Harga tidak boleh kurang dari 0.',
             'stock.integer' => 'Stok harus berupa angka bulat.',
+            'stock.min' => 'Stok tidak boleh kurang dari 0.',
         ];
     }
 }
